@@ -5,6 +5,7 @@ from __future__ import annotations
 from os import walk
 from pathlib import Path
 
+from ..parser import SyntaxParser, UnsupportedLanguageError
 from .file_filter import FileFilter
 from .language_detector import LanguageDetector
 
@@ -14,16 +15,18 @@ class RepositoryScanner:
         self,
         file_filter: FileFilter | None = None,
         language_detector: LanguageDetector | None = None,
+        syntax_parser: SyntaxParser | None = None,
     ) -> None:
         self.file_filter = file_filter or FileFilter()
         self.language_detector = language_detector or LanguageDetector()
+        self.syntax_parser = syntax_parser or SyntaxParser()
 
     def scan(self, repository: str | Path) -> None:
         """Traverse every directory and file beneath ``repository``.
 
         Ignored directories are pruned from traversal, and unsupported or
-        hidden files are skipped. Detected languages are intentionally not
-        returned or processed yet.
+        hidden files are skipped. Supported source files are parsed, but parse
+        results are intentionally discarded until extraction is implemented.
         """
         root = Path(repository).expanduser()
 
@@ -44,12 +47,17 @@ class RepositoryScanner:
                 if not self.file_filter.should_include_file(file_path):
                     continue
 
-                detected_language = self.language_detector.detect(file_path)
-                if detected_language is None:
+                language = self.language_detector.detect(file_path)
+                if language is None:
                     continue
 
-                # Detection is wired into the scan, but the result is not used
-                # until extraction and indexing are implemented.
+                try:
+                    self.syntax_parser.parse_file(file_path, language)
+                except UnsupportedLanguageError:
+                    # The detector knows about more languages than the grammar
+                    # registry currently provides. Those files remain eligible
+                    # for future parser support.
+                    continue
 
 
 def scan_repository(repository: str | Path) -> None:

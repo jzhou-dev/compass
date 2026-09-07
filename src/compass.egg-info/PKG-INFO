@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: compass
+Version: 0.1.0
+Summary: Analyze a repository and build an interactive map of its relationships.
+Requires-Python: >=3.11
+Requires-Dist: tree-sitter>=0.23
+Requires-Dist: tree-sitter-javascript>=0.23
+Requires-Dist: tree-sitter-python>=0.23
+Requires-Dist: tree-sitter-typescript>=0.23
