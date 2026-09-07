@@ -7,6 +7,12 @@ name = "compass"
 version = "0.1.0"
 description = "Analyze a repository and build an interactive map of its relationships."
 requires-python = ">=3.11"
+dependencies = [
+    "tree-sitter>=0.23",
+    "tree-sitter-javascript>=0.23",
+    "tree-sitter-python>=0.23",
+    "tree-sitter-typescript>=0.23",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
