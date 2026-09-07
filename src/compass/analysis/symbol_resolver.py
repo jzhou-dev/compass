@@ -1,0 +1,2 @@
+"""Symbol resolution placeholder."""
+

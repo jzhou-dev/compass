@@ -1,0 +1,2 @@
+"""Compass test package."""
+

@@ -1,0 +1,2 @@
+"""Graph-format renderer placeholder."""
+

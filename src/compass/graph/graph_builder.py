@@ -1,0 +1,2 @@
+"""Dependency graph construction placeholder."""
+

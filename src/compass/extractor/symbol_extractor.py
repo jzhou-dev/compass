@@ -1,0 +1,2 @@
+"""Symbol extraction placeholder."""
+

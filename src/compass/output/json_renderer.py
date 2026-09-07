@@ -1,0 +1,2 @@
+"""JSON output renderer placeholder."""
+
