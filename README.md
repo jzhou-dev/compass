@@ -1,8 +1,8 @@
 # Compass
 
-Compass is a CLI tool that analyzes a software repository and builds an interactive map of how its files, modules, functions, classes, and APIs relate to one another.
+Compass is a web application that analyzes a software repository and builds an interactive map of how its files, modules, functions, classes, and APIs relate to one another.
 
-The project is currently scaffolded. The architecture and interfaces are being established before implementing the analysis pipeline.
+Users will be able to connect a Git repository or drag and drop source files for analysis. The project is currently scaffolded; the architecture and interfaces are being established before implementing the analysis pipeline.
 
 ## Planned features
 
@@ -20,6 +20,11 @@ The project is currently scaffolded. The architecture and interfaces are being e
 - Source locations and metadata for graph entities
 - JSON, graph-format, terminal, and interactive exports
 - Extensible language and output-format support
+- Git repository connection and import workflow
+- Drag-and-drop source-file upload
+- Interactive browser-based dependency map
+- Search, filtering, and relationship inspection
+- REST API access for repository analysis
 
 ## How it works
 
@@ -52,8 +57,9 @@ JSON / Graph / Interactive Output
 ## Project architecture
 
 ```text
-src/compass/
-├── cli/        Command-line interface and commands
+frontend/       Browser application and interactive visualization
+backend/        REST API and analysis orchestration
+src/compass/    Shared analysis pipeline and graph domain
 ├── indexer/    Repository scanning and file filtering
 ├── parser/     Tree-sitter parser and grammar management
 ├── extractor/  Imports, symbols, calls, and APIs
@@ -91,17 +97,29 @@ Relationships will include:
 
 Each node and relationship is expected to retain useful metadata, including source path, line and column range, language, visibility, and resolution status.
 
-## CLI direction
+## Web application
 
-The planned CLI surface is:
+The frontend will provide two primary ingestion flows:
 
-```bash
-compass analyze <repository>
-compass export <analysis>
-compass serve <analysis>
+```text
+Connect Git repository → Select branch or commit → Start analysis
+Drag and drop files   → Upload source files    → Start analysis
 ```
 
-The CLI will eventually support configuration for ignored paths, supported languages, output formats, and analysis depth.
+The resulting graph will be displayed in the browser with navigation, search, filtering, and relationship details.
+
+## REST API
+
+The backend will expose REST endpoints for:
+
+- Creating an analysis from a connected Git repository
+- Uploading source files for analysis
+- Checking analysis status
+- Retrieving graph data and metadata
+- Querying files, symbols, and relationships
+- Exporting analysis results
+
+The frontend will consume this API, while the backend will coordinate ingestion, parsing, graph construction, and output serialization.
 
 ## Output formats
 
@@ -118,7 +136,9 @@ The analysis model will remain independent from the eventual frontend so that a 
 
 ```text
 compass/
-├── src/compass/  Application source code
+├── frontend/     Browser application scaffold
+├── backend/      REST API scaffold
+├── src/compass/  Core analysis pipeline
 ├── tests/        Parser, extractor, graph, and integration tests
 ├── docs/         Architecture and design documentation
 ├── pyproject.toml
@@ -130,9 +150,10 @@ compass/
 1. Core indexing and Tree-sitter parsing
 2. Static symbol, import, API, and call extraction
 3. Relationship resolution and dependency graph construction
-4. Analysis services and export formats
-5. Interactive visualization, caching, and incremental indexing
+4. REST API and repository/file ingestion
+5. Interactive frontend visualization
+6. Caching, incremental indexing, and collaboration features
 
 ## Current status
 
-The repository contains the initial Python package structure, CLI entrypoint placeholder, analysis modules, output modules, test directories, and architecture documentation. Feature implementation is planned for the phases above.
+The repository contains empty frontend and backend scaffolds, the initial Python analysis package, analysis modules, output modules, test directories, and architecture documentation. Feature implementation is planned for the phases above.

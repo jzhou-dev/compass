@@ -8,9 +8,5 @@ version = "0.1.0"
 description = "Analyze a repository and build an interactive map of its relationships."
 requires-python = ">=3.11"
 
-[project.scripts]
-compass = "compass.cli.entrypoint:main"
-
 [tool.setuptools.packages.find]
 where = ["src"]
-

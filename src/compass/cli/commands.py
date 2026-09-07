@@ -1,2 +1,0 @@
-"""CLI command definitions placeholder."""
-
